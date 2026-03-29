@@ -28,7 +28,7 @@ namespace Customer.Console.Client
                 System.Console.WriteLine("Insert failed");
             }
 
-            System.Console.ReadLine();
+            System.Console.ReadLine();  
         }
     }
 }
