@@ -18,7 +18,9 @@ namespace Customer.Console.Client
                 System.Console.WriteLine("1. Insert Customer");
                 System.Console.WriteLine("2. Get All Customers");
                 System.Console.WriteLine("3. Get Customer By Name");
-                System.Console.WriteLine("4. Exit");
+                System.Console.WriteLine("4. Update Customer");
+                System.Console.WriteLine("5. Delete Customer");
+                System.Console.WriteLine("6. Exit");
 
                 string choice = System.Console.ReadLine();
 
@@ -33,9 +35,9 @@ namespace Customer.Console.Client
                             new SqlParameter("@Name", name)
                         };
 
-                        int result = dao.UpdateData(Sqls.InsertCustomer, insertParams);
+                        int insertResult = dao.UpdateData(Sqls.InsertCustomer, insertParams);
 
-                        if (result > 0)
+                        if (insertResult > 0)
                             System.Console.WriteLine("Inserted successfully");
                         else
                             System.Console.WriteLine("Insert failed");
@@ -68,6 +70,60 @@ namespace Customer.Console.Client
                         break;
 
                     case "4":
+                        System.Console.WriteLine("\nCurrent Customers:");
+
+                        DataTable allCustomers = dao.GetAllData();
+                        foreach (DataRow row in allCustomers.Rows)
+                        {
+                            System.Console.WriteLine($"Id: {row["Id"]}, Name: {row["Name"]}");
+                        }
+
+                        System.Console.Write("\nEnter Id to update: ");
+                        int updateId = int.Parse(System.Console.ReadLine());
+
+                        System.Console.Write("Enter new name: ");
+                        string newName = System.Console.ReadLine();
+
+                        SqlParameter[] updateParams = new SqlParameter[]
+                        {
+                            new SqlParameter("@Id", updateId),
+                            new SqlParameter("@Name", newName)
+                        };
+
+                        int updateResult = dao.UpdateData(Sqls.UpdateCustomer, updateParams);
+
+                        if (updateResult > 0)
+                            System.Console.WriteLine("Updated successfully");
+                        else
+                            System.Console.WriteLine("Update failed");
+                        break;
+
+                    case "5":
+                        System.Console.WriteLine("\nCurrent Customers:");
+
+                        DataTable allCustomersDelete = dao.GetAllData();
+                        foreach (DataRow row in allCustomersDelete.Rows)
+                        {
+                            System.Console.WriteLine($"Id: {row["Id"]}, Name: {row["Name"]}");
+                        }
+
+                        System.Console.Write("\nEnter Id to delete: ");
+                        int deleteId = int.Parse(System.Console.ReadLine());
+
+                        SqlParameter[] deleteParams = new SqlParameter[]
+                        {
+                            new SqlParameter("@Id", deleteId)
+                        };
+
+                        int deleteResult = dao.UpdateData(Sqls.DeleteCustomer, deleteParams);
+
+                        if (deleteResult > 0)
+                            System.Console.WriteLine("Deleted successfully");
+                        else
+                            System.Console.WriteLine("Delete failed");
+                        break;
+
+                    case "6":
                         isRunning = false;
                         break;
 

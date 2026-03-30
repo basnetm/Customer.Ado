@@ -55,7 +55,7 @@ namespace Customer.Ado
             return customer;
         }
 
-        //dml insert,update,delete
+        //dml update
         public int UpdateData(string sql, SqlParameter[] sqlParameters = null)
         {
             return SqlHandler.UpdateData(sql, sqlParameters);
